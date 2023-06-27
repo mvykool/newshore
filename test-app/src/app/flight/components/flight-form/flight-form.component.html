@@ -25,14 +25,14 @@
 
         <!-- Added more fields dynamically for multiple destinations -->
         <div formArrayName="intermediaryDestinations" *ngIf="flightForm.get('tripType')?.value === 'multiStop'">
-            <div *ngFor="let intermediaryDestination of getIntermediaryDestinations.controls; index as i" [formGroupName]="i">
+            <div *ngFor="let intermediaryDestination of getIntermediaryDestinations.controls; let i = index" [formGroupName]="i">
                 <div>
-                    <label>Origin {{ i + 2 }}</label>
-                    <input formControlName="origin">
+                    <label>New Origin {{ i + 1 }}</label>
+                    <input formControlName="newOrigin" [value]="flightForm.get('destination')?.value">
                 </div>
                 <div>
-                    <label>Destination {{ i + 2 }}</label>
-                    <input formControlName="destination">
+                    <label>New Destination {{ i + 1 }}</label>
+                    <input formControlName="newDestination">
                 </div>
 
                 <button (click)="removeIntermediaryDestination(i)">Remove this stop</button>
