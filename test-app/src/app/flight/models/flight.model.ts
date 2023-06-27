@@ -1,9 +1,9 @@
 export class Flight {
-  DepartureStation: string;
-  ArrivalStation: string;
-  FlightCarrier: string;
-  FlightNumber: string;
-  Price: number;
+  departureStation: string;
+  arrivalStation: string;
+  flightCarrier: string;
+  flightNumber: string;
+  price: number;
 
   constructor(
     DepartureStation: string,
@@ -12,10 +12,10 @@ export class Flight {
     FlightNumber: string,
     Price: number
   ) {
-    this.DepartureStation = DepartureStation;
-    this.ArrivalStation = ArrivalStation;
-    this.FlightCarrier = FlightCarrier;
-    this.FlightNumber = FlightNumber;
-    this.Price = Price;
+    this.departureStation = DepartureStation;
+    this.arrivalStation = ArrivalStation;
+    this.flightCarrier = FlightCarrier;
+    this.flightNumber = FlightNumber;
+    this.price = Price;
   }
 }

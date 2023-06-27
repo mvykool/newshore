@@ -1,14 +1,49 @@
 <div>
     <h2>Flight Form</h2>
     <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
+
+        <label>
+        <input type="radio" value="oneWay" formControlName="tripType"> One-way
+        </label>
+
+        <label>
+        <input type="radio" value="multiStop" formControlName="tripType"> Multiple destinations
+        </label>
+
         <div>
-            <label for="origin">Origin:</label>
-            <input type="text" id="origin" formControlName="origin" maxlength="3" required>
+            <label>Origin</label>
+            <input formControlName="origin">
+            <!-- Here you can display validation errors for the origin field -->
         </div>
+
         <div>
-            <label for="destination">Destination:</label>
-            <input type="text" id="destination" formControlName="destination" maxlength="3" required>
+            <label>Destination</label>
+            <input formControlName="destination">
+            <!-- Here you can display validation errors for the destination field -->
         </div>
-        <button type="submit">Search Flights</button>
+
+
+        <!-- Added more fields dynamically for multiple destinations -->
+        <div formArrayName="intermediaryDestinations" *ngIf="flightForm.get('tripType')?.value === 'multiStop'">
+            <div *ngFor="let intermediaryDestination of getIntermediaryDestinations.controls; index as i" [formGroupName]="i">
+                <div>
+                    <label>Origin {{ i + 2 }}</label>
+                    <input formControlName="origin">
+                </div>
+                <div>
+                    <label>Destination {{ i + 2 }}</label>
+                    <input formControlName="destination">
+                </div>
+
+                <button (click)="removeIntermediaryDestination(i)">Remove this stop</button>
+            </div>
+        </div>
+
+
+        <button *ngIf="flightForm.get('tripType')?.value === 'multiStop'" (click)="addIntermediaryDestination()">Add Origin and Destination</button>
+
+
+        <button type="submit">Find route</button>
+
     </form>
 </div>
