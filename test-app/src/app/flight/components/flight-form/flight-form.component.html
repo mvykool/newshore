@@ -1,1 +1,14 @@
-<p>flight-form works!</p>
+<div>
+    <h2>Flight Form</h2>
+    <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label for="origin">Origin:</label>
+            <input type="text" id="origin" formControlName="origin" maxlength="3" required>
+        </div>
+        <div>
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" formControlName="destination" maxlength="3" required>
+        </div>
+        <button type="submit">Search Flights</button>
+    </form>
+</div>

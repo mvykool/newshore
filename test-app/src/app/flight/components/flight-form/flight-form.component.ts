@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlightService } from '../../services/flight.service';
+import { Flight } from '../../models/flight.model';
 
 @Component({
   selector: 'app-flight-form',
@@ -19,8 +20,14 @@ export class FlightFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.flightForm.valid) {
-      // Aquí puedes realizar la lógica cuando el formulario sea válido y se envíe.
-      // Por ejemplo, podrías llamar a un método en flightService que realiza la petición a la API.
+        this.flightService.getFlights().subscribe({
+            next: (flights: Flight[]) => {
+                console.log(flights);
+            },
+            error: (error: any) => {
+                console.error('Error fetching flights:', error);
+            }
+        });
     }
-  }
+}
 }
