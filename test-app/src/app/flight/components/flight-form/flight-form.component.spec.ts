@@ -1,8 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { FlightFormComponent } from './flight-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+// Other imports
 
 describe('FlightFormComponent', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, HttpClientModule],
+  
+    });
+  });
+
   let component: FlightFormComponent;
   let fixture: ComponentFixture<FlightFormComponent>;
 
@@ -19,3 +28,5 @@ describe('FlightFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

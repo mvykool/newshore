@@ -49,7 +49,7 @@ onSubmit(): void {
           const routeSegment = this.findRoute(currentOrigin, currentDestination, flights, []);
           if (routeSegment) {
             totalRoute.push(...routeSegment.flights); // Push individual flights into totalRoute
-            currentOrigin = currentDestination; // The current destination becomes the new origin for the next segment
+            currentOrigin = currentDestination;
           } else {
             console.log('Route segment not found from', currentOrigin, 'to', currentDestination);
             break;
@@ -76,7 +76,6 @@ onSubmit(): void {
 findRoute(current: string, destination: string, flights: Flight[], route: Flight[] = [], visited: Set<string> = new Set()): { origin: string, destination: string, flights: Flight[] } | null {
   visited.add(current);
 
-  // Filter flights departing from the current airport
   const departingFlights = flights.filter(flight => flight.departureStation.toUpperCase() === current.toUpperCase());
 
   for (const flight of departingFlights) {
@@ -84,22 +83,15 @@ findRoute(current: string, destination: string, flights: Flight[], route: Flight
           continue;
       }
 
-      // If the flight is heading to the destination, we have found a route
       if (flight.arrivalStation.toUpperCase() === destination.toUpperCase()) {
           return { origin: current, destination: destination, flights: [...route, flight] };
       }
 
-      // If the flight is not heading to the destination
-      // Recursively call findRoute with the new origin
       const newRoute = this.findRoute(flight.arrivalStation, destination, flights, [...route, flight], visited);
       
       if (newRoute) {
           return newRoute;
       }
   }
-
   return null;
-}
-
-
-}
+}}

@@ -26,7 +26,7 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currencyService.selectedCurrency$.subscribe((selectedCurrency: string) => {
-      this.selectedCurrency = selectedCurrency; // This line was missing
+      this.selectedCurrency = selectedCurrency;
       if (selectedCurrency !== 'USD') {
         this.currencyService.convertCurrency('USD', selectedCurrency)
           .subscribe((rate: number) => {
@@ -60,8 +60,5 @@ export class ResultsComponent implements OnInit {
   ngOnDestroy() {
     if (this.currencySub) {
       this.currencySub.unsubscribe();
-    }
+    }}
   }
-
-
-}

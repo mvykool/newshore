@@ -8,7 +8,6 @@
         </p>
     </div>
 
-
     <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
 
         <div class="sub-input">
@@ -23,11 +22,11 @@
 
         <div class="flight-container">
             <div class="input-section">
-                <!-- Existing error handling -->
+                <!-- error for amount of letters -->
                 <div *ngIf="flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched">
                     <span class="invalid-text">Please enter exactly 3 letters!</span>
                 </div>
-                <!-- New error for originDestinationSame -->
+                <!-- errors for same letters-->
                 <div *ngIf="flightForm.hasError('originDestinationSame')">
                     <span class="invalid-text">Origin and destination can't be the same!</span>
                 </div>
@@ -38,11 +37,11 @@
             </div>
 
             <div class="input-section">
-                <!-- Existing error handling -->
+                <!-- error for 3 letters -->
                 <div *ngIf="flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched">
                     <span class="invalid-text">Please enter exactly 3 letters!</span>
                 </div>
-                <!-- New error for originDestinationSame -->
+                <!-- errors for same letters-->
                 <div *ngIf="flightForm.hasError('originDestinationSame')">
                     <span class="invalid-text">Origin and destination can't be the same!</span>
                 </div>
@@ -55,7 +54,6 @@
 
         <div class="low-form">
             <button type="submit" class="submit-btn" [disabled]="!flightForm.valid">Search Flight</button>
-
             <div *ngIf="message" class="alert">{{ message }}</div>
         </div>
 

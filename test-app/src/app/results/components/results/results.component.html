@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="flights-info">
-                    <span class="total">Price:</span> {{ flight?.Price * conversionRate | number : '1.0-0' }} <small>{{selectedCurrency}}</small>
+                    <span class="total">Price: </span> {{ flight?.Price * conversionRate | number : '1.0-0' }} <small>{{selectedCurrency}}</small>
                 </div>
 
                 <div class="flights-info">
@@ -32,7 +32,7 @@
             </div>
 
 
-            <p class="price"><span class="total">Total Price</span>: {{ journey?.Journey?.Price * conversionRate | number : '1.0-0' }} <small>{{selectedCurrency}}</small></p>
+            <p class="price"><span class="total">Total Price </span>: {{ journey?.Journey?.Price * conversionRate | number : '1.0-0' }} <small> {{selectedCurrency}}</small></p>
 
         </div>
 

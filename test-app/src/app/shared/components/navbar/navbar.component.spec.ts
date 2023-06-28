@@ -1,8 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar.component';
 
-describe('NavbarComponent', () => {
+
+describe('CurrencyService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],
+
+    });
+  });
+
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
@@ -19,3 +27,4 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms'; // Add this line
+import { ReactiveFormsModule } from '@angular/forms';
 import { FlightFormComponent } from './components/flight-form/flight-form.component';
 import { UppercaseInputDirective } from './directives/uppercase-input.directive';
 
@@ -11,7 +11,7 @@ import { UppercaseInputDirective } from './directives/uppercase-input.directive'
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule // And add it here
+    ReactiveFormsModule 
   ],
   exports: [
     FlightFormComponent
