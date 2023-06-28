@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,6 +6,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  imageUsa = "/test-app/src/assets/images/usa.png"
+  @ViewChild('dropdown', { static: false })
+  dropdown!: ElementRef;
+
+  dropdownOpen = false;
+  selectedImg = '../../../../assets/images/usa.png';
+  selectedOption: string = 'USD';
+  options = [
+    {name: 'USD', image: '../../../../assets/images/usa.png'},
+    {name: 'COP', image: '../../../../assets/images/col.png'},
+    {name: 'EUR', image: '../../../../assets/images/eur.png'},
+  ];
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  selectOption(option: any) {
+    this.selectedOption = option.name;
+    this.selectedImg = option.image;
+    this.dropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: { target: any; }) {
+    if(!this.dropdown.nativeElement.contains(event.target)) {
+      this.dropdownOpen = false;
+    }
+  }
 
 }

@@ -1,14 +1,20 @@
 <nav>
 
-    <div>
+    <div class="navbar">
         <h3>✈️ TRIP</h3>
 
 
-        <select name="" id="">
-        <option value="">USD</option>
-        <option value="">COP</option>
-        <option value="">EUR</option>
-    </select>
+        <div class="dropdown" #dropdown>
+            <button class="dropdown-button" (click)="toggleDropdown()">
+            <img class="flag" [src]="selectedImg" alt="{{selectedOption}} icon"> 
+            {{selectedOption}}
+            </button>
+            <div class="dropdown-menu" [class.show]="dropdownOpen">
+                <button *ngFor="let option of options" (click)="selectOption(option)">
+                    <img class="flag" [src]="option.image" alt="{{option.name}} icon"> {{option.name}}
+                </button>
+            </div>
+        </div>
     </div>
 
 </nav>

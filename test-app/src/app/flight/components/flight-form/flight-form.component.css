@@ -17,10 +17,10 @@ p {
 
 form {
     background: #fff;
-    margin-top: 3rem;
+    margin-top: 2rem;
     padding: 2rem;
     border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.29) 0px 3px 8px;
 }
 
 input[type="radio"] {
@@ -30,6 +30,7 @@ input[type="radio"] {
     height: 20px;
     border: 1px solid #000;
     border-radius: 50%;
+    cursor: pointer;
     background-color: transparent;
     position: relative;
     top: 6px;
@@ -148,5 +149,44 @@ input[type="radio"]:checked::before {
 
 .submit-btn:hover {
     background: #404040;
+    transform: scale(1.1);
+}
+
+.add-btn {
+    background: transparent;
+    border: 1px solid #000;
+    padding: 10px 12px;
+    margin-right: 20px;
+    color: #000;
+    border-radius: 3px;
+    font-size: 17px;
+    cursor: pointer;
+    animation-duration: 100ms;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    background: #4b4b4b;
+    padding: 10px 12px;
+    color: #fff;
+    background: #404040;
+    transform: scale(1.1);
+}
+
+.remove-btn {
+    background: #f35c5c;
+    border: none;
+    padding: 10px 12px;
+    margin: 5px 0 40px;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 17px;
+    cursor: pointer;
+    animation-duration: 100ms;
+    transition: 0.3s;
+}
+
+.remove-btn:hover {
+    background: #e10404;
     transform: scale(1.1);
 }
