@@ -1,0 +1,152 @@
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 10rem;
+}
+
+h2 {
+    font-size: 35px;
+    font-weight: bolder;
+}
+
+p {
+    font-weight: 600;
+    color: #4b4b4b;
+}
+
+form {
+    background: #fff;
+    margin-top: 3rem;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    background-color: transparent;
+    position: relative;
+    top: 6px;
+}
+
+input[type="radio"]:checked::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #58abeb;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: appear 0.8s;
+}
+
+.radio {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.field-radio-container {
+    display: flex;
+    gap: 10px;
+}
+
+.field-radio {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.field-radio small {
+    color: #828282;
+    margin-right: 40px;
+}
+
+@keyframes appear {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        background-color: #fff;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(1.5);
+        background-color: #218bd2;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.6);
+        background-color: #257bb5;
+    }
+    55% {
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        background-color: #58abeb;
+    }
+}
+
+.flight-container {
+    display: flex;
+    height: 80px;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.flight-box {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 45%;
+    border: 1px solid #dbdbdb;
+    justify-content: space-between;
+    margin-top: 10px;
+    border-radius: 3px;
+    padding: 3px 1rem;
+}
+
+.flight-box label {
+    color: #494949;
+}
+
+.flight-box input {
+    position: relative;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.flight-box input:focus {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.submit-btn {
+    background: #000;
+    padding: 10px 12px;
+    color: #fff;
+    border-radius: 3px;
+    border: none;
+    font-size: 17px;
+    cursor: pointer;
+    animation-duration: 100ms;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #404040;
+    transform: scale(1.1);
+}

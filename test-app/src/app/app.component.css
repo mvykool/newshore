@@ -1,0 +1,8 @@
+main {
+    background-image: url(../assets/images/bg-app.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    overflow-x: hidden;
+    height: 80vh;
+}

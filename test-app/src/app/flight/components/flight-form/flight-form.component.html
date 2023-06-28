@@ -1,29 +1,44 @@
-<div>
-    <h2>Flight Form</h2>
+<section>
+
+    <div>
+        <h2>Life Is Short And The World Is Wide!</h2>
+
+        <p>
+            to get the best of your adventure you just need to leave and <br> go where you like. We are waiting for you!
+        </p>
+    </div>
+
+
     <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
 
-        <label>
-        <input type="radio" value="oneWay" formControlName="tripType"> One-way
-        </label>
+        <div class="field-radio">
+            <div class="field-radio-container">
+                <label class="radio">
+                    <input type="radio" checked value="oneWay" formControlName="tripType" class="radio-btn"> One-way
+                    </label>
 
-        <label>
-        <input type="radio" value="multiStop" formControlName="tripType"> Multiple destinations
-        </label>
+                <label class="radio">
+                    <input type="radio" value="multiStop" formControlName="tripType" class="radio-btn"> Multiple destinations
+                    </label>
+            </div>
 
-        <div>
-            <label>Origin</label>
-            <input formControlName="origin">
-            <!-- Here you can display validation errors for the origin field -->
+            <small>
+                Book International and Domestic Flights
+            </small>
         </div>
 
-        <div>
-            <label>Destination</label>
-            <input formControlName="destination">
-            <!-- Here you can display validation errors for the destination field -->
+        <div class="flight-container">
+            <div class="flight-box">
+                <label>From</label>
+                <input formControlName="origin" placeholder="MZL">
+            </div>
+
+            <div class="flight-box">
+                <label>To</label>
+                <input formControlName="destination" placeholder="BCN">
+            </div>
         </div>
 
-
-        <!-- Added more fields dynamically for multiple destinations -->
         <div formArrayName="intermediaryDestinations" *ngIf="flightForm.get('tripType')?.value === 'multiStop'">
             <div *ngFor="let intermediaryDestination of getIntermediaryDestinations.controls; let i = index" [formGroupName]="i">
                 <div>
@@ -43,7 +58,7 @@
         <button *ngIf="flightForm.get('tripType')?.value === 'multiStop'" (click)="addIntermediaryDestination()">Add Origin and Destination</button>
 
 
-        <button type="submit">Find route</button>
+        <button type="submit" class="submit-btn">Search Flight</button>
 
     </form>
-</div>
+</section>
