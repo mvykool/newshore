@@ -15,6 +15,10 @@ p {
     color: #4b4b4b;
 }
 
+input {
+    text-transform: uppercase;
+}
+
 form {
     background: #fff;
     margin-top: 2rem;
