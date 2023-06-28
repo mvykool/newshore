@@ -10,40 +10,40 @@
 
 
     <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
-        <!-- Rest of your code -->
+
+        <div class="sub-input">
+            <div>
+                <button class="one-way"> One-way ➡️</button>
+            </div>
+
+            <small>
+                Book International and Domestic Flights
+            </small>
+        </div>
 
         <div class="flight-container">
             <div class="input-section">
-                <!-- Existing error handling -->
                 <div *ngIf="flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched">
                     <span class="invalid-text">Please enter exactly 3 letters!</span>
                 </div>
-                <!-- New error for originDestinationSame -->
-                <div *ngIf="flightForm.hasError('originDestinationSame')">
-                    <span class="invalid-text">Origin and destination can't be the same!</span>
-                </div>
-                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched || flightForm.hasError('originDestinationSame')}">
+                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched}">
                     <label>From</label>
                     <input formControlName="origin" placeholder="MZL" appUppercase>
                 </div>
             </div>
 
             <div class="input-section">
-                <!-- Existing error handling -->
                 <div *ngIf="flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched">
                     <span class="invalid-text">Please enter exactly 3 letters!</span>
                 </div>
-                <!-- New error for originDestinationSame -->
-                <div *ngIf="flightForm.hasError('originDestinationSame')">
-                    <span class="invalid-text">Origin and destination can't be the same!</span>
-                </div>
-                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched || flightForm.hasError('originDestinationSame')}">
+                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched}">
                     <label>To</label>
                     <input formControlName="destination" placeholder="BCN" appUppercase>
                 </div>
             </div>
-        </div>
 
+        </div>
         <button type="submit" class="submit-btn" [disabled]="!flightForm.valid">Search Flight</button>
+
     </form>
 </section>
