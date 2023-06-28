@@ -27,6 +27,19 @@ form {
     box-shadow: rgba(0, 0, 0, 0.29) 0px 3px 8px;
 }
 
+.low-form {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.alert {
+    color: #e10404;
+    border-radius: 5px;
+    border: 1px solid #e10404;
+    padding: 1rem;
+}
+
 input.ng-invalid.ng-dirty {
     border-color: red;
 }

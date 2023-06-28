@@ -16,7 +16,7 @@ export class FlightFormComponent implements OnInit {
     destination: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
   }, { validators: this.originDestinationValidator } as AbstractControlOptions);
 
-  
+  message: string = '';
 
   constructor(private formBuilder: FormBuilder, private flightService: FlightService, private dataStoreService: DataStoreService,
     private router: Router) { }
@@ -39,7 +39,7 @@ onSubmit(): void {
     const destination = this.flightForm.value.destination;
 
     let currentOrigin = origin;
-    const totalRoute: Flight[] = []; // Update the type to Flight[]
+    const totalRoute: Flight[] = [];
 
     const allDestinations = [destination];
 
@@ -63,7 +63,7 @@ onSubmit(): void {
           // Navigate to the "results" component
           this.router.navigate(['/results']);
         } else {
-          console.log('Complete route not found');
+          this.message = 'No flights available';
         }
       },
       error: (error: any) => {
@@ -74,21 +74,33 @@ onSubmit(): void {
 }
 
   
-  findRoute(current: string, destination: string, flights: Flight[], route: Flight[]): { origin: string, destination: string, flights: Flight[] } | null {
-    const departingFlights = flights.filter(flight => flight.departureStation.toUpperCase() === current.toUpperCase());
-  
-    for (const flight of departingFlights) {
-      if (flight.arrivalStation.toUpperCase() === destination.toUpperCase()) {
-        return { origin: current, destination: destination, flights: [...route, flight] };
-      } else if (!route.find(r => r.departureStation.toUpperCase() === flight.arrivalStation.toUpperCase())) {
-        const newRoute = this.findRoute(flight.arrivalStation, destination, flights, [...route, flight]);
-        if (newRoute) {
-          return newRoute;
-        }
+findRoute(current: string, destination: string, flights: Flight[], route: Flight[] = [], visited: Set<string> = new Set()): { origin: string, destination: string, flights: Flight[] } | null {
+  visited.add(current);
+
+  // Filter flights departing from the current airport
+  const departingFlights = flights.filter(flight => flight.departureStation.toUpperCase() === current.toUpperCase());
+
+  for (const flight of departingFlights) {
+      if (visited.has(flight.arrivalStation.toUpperCase())) {
+          continue;
       }
-    }
-  
-    return null;
+
+      // If the flight is heading to the destination, we have found a route
+      if (flight.arrivalStation.toUpperCase() === destination.toUpperCase()) {
+          return { origin: current, destination: destination, flights: [...route, flight] };
+      }
+
+      // If the flight is not heading to the destination
+      // Recursively call findRoute with the new origin
+      const newRoute = this.findRoute(flight.arrivalStation, destination, flights, [...route, flight], visited);
+      
+      if (newRoute) {
+          return newRoute;
+      }
   }
+
+  return null;
+}
+
 
 }

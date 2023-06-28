@@ -15,3 +15,4 @@ getFlights(): Observable<Flight[]> {
 	return this.http.get<Flight[]>(`${this.baseUrl}/flights/0`);
 }
 }
+
