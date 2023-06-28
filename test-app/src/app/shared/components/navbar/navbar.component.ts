@@ -10,23 +10,23 @@ export class NavbarComponent {
   dropdown!: ElementRef;
 
   dropdownOpen = false;
-  selectedImg = '../../../../assets/images/usa.png';
+  selectedImg =  'assets/images/usa.png';
   selectedOption: string = 'USD';
   options = [
-    {name: 'USD', image: '../../../../assets/images/usa.png'},
-    {name: 'COP', image: '../../../../assets/images/col.png'},
-    {name: 'EUR', image: '../../../../assets/images/eur.png'},
+    {name: 'USD', image: 'assets/images/usa.png'},
+    {name: 'COP', image: 'assets/images/col.png'},
+    {name: 'EUR', image: 'assets/images/eur.png'},
   ];
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  selectOption(option: any) {
-    this.selectedOption = option.name;
-    this.selectedImg = option.image;
-    this.dropdownOpen = false;
-  }
+ selectOption(option: any) {
+  this.selectedOption = option.name;
+  this.selectedImg = option.image;
+  this.dropdownOpen = false;
+}
 
   @HostListener('document:click', ['$event'])
   clickout(event: { target: any; }) {

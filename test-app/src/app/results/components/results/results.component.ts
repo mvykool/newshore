@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataStoreService } from '../../../flight/services/data-store.service';
 import { Flight } from '../../../flight/models/flight.model';
 
@@ -9,8 +10,13 @@ import { Flight } from '../../../flight/models/flight.model';
 })
 export class ResultsComponent implements OnInit {
   journey: any;
+  backArrow  = 'assets/images/left-arrow.png';
 
-  constructor(private dataStoreService: DataStoreService) {}
+  constructor(private dataStoreService: DataStoreService, private router: Router) {}
+
+  goBack(): void {
+    this.router.navigate(['/home']);
+  }
 
   ngOnInit(): void {
     this.dataStoreService.flightsData$.subscribe((flights: Flight[]) => {
@@ -30,7 +36,6 @@ export class ResultsComponent implements OnInit {
           }))
         }
       };
-      console.log(this.journey);
     });
   }
 }

@@ -6,12 +6,12 @@
 
         <div class="dropdown" #dropdown>
             <button class="dropdown-button" (click)="toggleDropdown()">
-            <img class="flag" [src]="selectedImg" alt="{{selectedOption}} icon" loading="lazy"> 
+            <img class="flag" [src]="selectedImg" alt="{{selectedOption}} icon" > 
             {{selectedOption}}
             </button>
             <div class="dropdown-menu" [class.show]="dropdownOpen">
                 <button *ngFor="let option of options" (click)="selectOption(option)">
-                    <img class="flag" [src]="option.image" alt="{{option.name}} icon" loading="lazy"> {{option.name}}
+                    <img class="flag" [src]="option.image" alt="{{option.name}} icon" > {{option.name}}
                 </button>
             </div>
         </div>
