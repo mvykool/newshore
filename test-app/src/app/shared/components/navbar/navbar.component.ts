@@ -1,4 +1,6 @@
 import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { CurrencyService } from '../../../services/currency.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,7 @@ export class NavbarComponent {
   dropdown!: ElementRef;
 
   dropdownOpen = false;
-  selectedImg =  'assets/images/usa.png';
+  selectedImg = 'assets/images/usa.png';
   selectedOption: string = 'USD';
   options = [
     {name: 'USD', image: 'assets/images/usa.png'},
@@ -18,15 +20,32 @@ export class NavbarComponent {
     {name: 'EUR', image: 'assets/images/eur.png'},
   ];
 
+  constructor(private currencyService: CurrencyService, private router: Router) {} 
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
- selectOption(option: any) {
-  this.selectedOption = option.name;
-  this.selectedImg = option.image;
-  this.dropdownOpen = false;
+  titleClick(){
+    this.router.navigate(['/home']);
+  }
+
+  selectOption(option: any) {
+    this.selectedOption = option.name;
+    this.selectedImg = option.image;
+    this.currencyService.setCurrency(option.name);
+    this.dropdownOpen = false; 
+    this.convertCurrencyTo(option.name); 
 }
+
+  convertCurrencyTo(currency: string) {
+    if (currency !== 'USD') {
+      this.currencyService.convertCurrency('USD', currency)
+        .subscribe(rate => {
+          console.log(`The conversion rate from USD to ${currency} is ${rate}`);
+        });
+    }
+  }
 
   @HostListener('document:click', ['$event'])
   clickout(event: { target: any; }) {
@@ -34,5 +53,4 @@ export class NavbarComponent {
       this.dropdownOpen = false;
     }
   }
-
 }

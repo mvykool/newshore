@@ -11,7 +11,8 @@ nav {
     align-items: center;
 }
 
-h3 {
+.title {
+    cursor: pointer;
     font-size: 22px;
     font-weight: bold;
     color: #323232;

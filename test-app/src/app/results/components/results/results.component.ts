@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataStoreService } from '../../../flight/services/data-store.service';
-import { Flight } from '../../../flight/models/flight.model';
+import { DataStoreService } from '../../../services/data-store.service';
+import { CurrencyService } from '../../../services/currency.service';
+import { Flight } from '../../../models/flight.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-results',
@@ -11,14 +13,30 @@ import { Flight } from '../../../flight/models/flight.model';
 export class ResultsComponent implements OnInit {
   journey: any;
   backArrow  = 'assets/images/left-arrow.png';
+  selectedCurrency!: string;
+  conversionRate: number = 1;
+  private currencySub!: Subscription;
 
-  constructor(private dataStoreService: DataStoreService, private router: Router) {}
+
+  constructor(private dataStoreService: DataStoreService, private router: Router, private currencyService: CurrencyService) {}
 
   goBack(): void {
     this.router.navigate(['/home']);
   }
 
   ngOnInit(): void {
+    this.currencyService.selectedCurrency$.subscribe((selectedCurrency: string) => {
+      this.selectedCurrency = selectedCurrency; // This line was missing
+      if (selectedCurrency !== 'USD') {
+        this.currencyService.convertCurrency('USD', selectedCurrency)
+          .subscribe((rate: number) => {
+            this.conversionRate = rate;
+          });
+      } else {
+        this.conversionRate = 1;
+      }
+    });
+    
     this.dataStoreService.flightsData$.subscribe((flights: Flight[]) => {
       this.journey = {
         Journey: {
@@ -38,4 +56,12 @@ export class ResultsComponent implements OnInit {
       };
     });
   }
+
+  ngOnDestroy() {
+    if (this.currencySub) {
+      this.currencySub.unsubscribe();
+    }
+  }
+
+
 }

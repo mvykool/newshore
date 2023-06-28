@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,  AbstractControlOptions } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FlightService } from '../../services/flight.service';
-import { Flight } from '../../models/flight.model';
-import { DataStoreService } from '../../services/data-store.service';
+import { FlightService } from '../../../services/flight.service';
+import { Flight } from '../../../models/flight.model';
+import { DataStoreService } from '../../../services/data-store.service';
 
 @Component({
   selector: 'app-flight-form',
@@ -56,8 +56,7 @@ onSubmit(): void {
           }
         }
 
-        if (totalRoute.length > 0) { // Check if any flights are found
-          console.log('Complete route found:', totalRoute);
+        if (totalRoute.length > 0) { 
           // Store the data in the DataStoreService
           this.dataStoreService.updateFlightsData(totalRoute);
           // Navigate to the "results" component
