@@ -23,91 +23,45 @@ form {
     box-shadow: rgba(0, 0, 0, 0.29) 0px 3px 8px;
 }
 
-input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #000;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: transparent;
-    position: relative;
-    top: 6px;
+input.ng-invalid.ng-dirty {
+    border-color: red;
 }
 
-input[type="radio"]:checked::before {
-    content: "";
-    display: block;
-    width: 10px;
-    height: 10px;
-    background-color: #58abeb;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: appear 0.8s;
-}
-
-.radio {
-    font-size: 18px;
-    font-weight: bold;
-    color: #000;
-}
-
-.field-radio-container {
-    display: flex;
-    gap: 10px;
-}
-
-.field-radio {
+.sub-input {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.field-radio small {
-    color: #828282;
-    margin-right: 40px;
+.sub-input small {
+    color: #666666;
 }
 
-@keyframes appear {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        background-color: #fff;
-    }
-    45% {
-        transform: translate(-50%, -50%) scale(1.5);
-        background-color: #218bd2;
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.6);
-        background-color: #257bb5;
-    }
-    55% {
-        transform: translate(-50%, -50%) scale(1.5);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        background-color: #58abeb;
-    }
+.one-way {
+    border: 1px solid #72d2fb;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 8px;
 }
 
 .flight-container {
     display: flex;
-    height: 80px;
+    height: 90px;
     margin-bottom: 20px;
     gap: 10px;
+}
+
+.invalid-text {
+    color: #f35c5c;
 }
 
 .flight-box {
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 45%;
     border: 1px solid #dbdbdb;
     justify-content: space-between;
     margin-top: 10px;
@@ -150,6 +104,35 @@ input[type="radio"]:checked::before {
 .submit-btn:hover {
     background: #404040;
     transform: scale(1.1);
+}
+
+.invalid-input {
+    border: 1px solid red;
+    color: red;
+}
+
+.invalid-input input {
+    color: #e10404;
+}
+
+.invalid-input label {
+    color: #e10404;
+}
+
+.input-section {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+    background: rgb(143, 142, 142);
+}
+
+.submit-btn:disabled:hover {
+    transform: scale(1);
+    cursor: not-allowed;
 }
 
 .add-btn {

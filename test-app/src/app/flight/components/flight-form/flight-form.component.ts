@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FlightService } from '../../services/flight.service';
 import { Flight } from '../../models/flight.model';
 
@@ -10,77 +10,54 @@ import { Flight } from '../../models/flight.model';
 })
 export class FlightFormComponent implements OnInit {
   flightForm: FormGroup = this.formBuilder.group({
-    tripType: ['oneWay'],
     origin: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
-    destination: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
-    intermediaryDestinations: this.formBuilder.array([])
-  });
+    destination: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
+  }, { validators: this.originDestinationValidator });
 
   constructor(private formBuilder: FormBuilder, private flightService: FlightService) { }
 
   ngOnInit(): void {}
 
-  get getIntermediaryDestinations(): FormArray {
-    return this.flightForm.get('intermediaryDestinations') as FormArray;
-  }
-
-  addIntermediaryDestination(): void {
-    if (this.getIntermediaryDestinations.controls.length < 4) {
-      const previousDestination = this.flightForm.value.destination;
+  // The custom validator function
+  originDestinationValidator(group: FormGroup): {[key: string]: boolean} | null {
+    const originControl = group.controls['origin'];
+    const destinationControl = group.controls['destination'];
   
-      this.getIntermediaryDestinations.push(this.formBuilder.group({
-        newOrigin: [{ value: previousDestination, disabled: true }],
-        newDestination: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
-      }));
-  
-      // Update the 'destination' control with the new destination from the last intermediary destination
-      this.flightForm.get('destination')?.setValue(previousDestination);
+    // check if both fields have a value and if those values are the same
+    if (originControl.value && destinationControl.value && originControl.value === destinationControl.value) {
+      return { 'originDestinationSame': true };
     }
-  }
-  
-  removeIntermediaryDestination(index: number): void {
-    const intermediaryDestinations = this.getIntermediaryDestinations.controls;
-    
-    if (intermediaryDestinations[index]) {
-      const removedDestination = intermediaryDestinations[index].get('newDestination')?.value;
-      this.getIntermediaryDestinations.removeAt(index);
-      
-      // If we're removing the last intermediary destination, update the 'destination' control with its destination
-      if (index === intermediaryDestinations.length - 1) {
-        this.flightForm.get('destination')?.setValue(removedDestination);
-      }
-    }
+    return null;  // if there's no issue, return null
   }
 
   onSubmit(): void {
     if (this.flightForm.valid) {
       const origin = this.flightForm.value.origin;
       const destination = this.flightForm.value.destination;
-      const intermediaryDestinations = this.flightForm.get('intermediaryDestinations')?.value || [];
-  
-      let currentOrigin = origin;
-      const totalRoute: { origin: string; destination: string; flights: Flight[]; }[] = [];
-  
-      // Add all intermediary destinations to our list, with the final destination last
-      const allDestinations = [...intermediaryDestinations.map((id: { destination: any; }) => id.destination), destination];
-  
+
       this.flightService.getFlights().subscribe({
         next: (flights: Flight[]) => {
-          for (const currentDestination of allDestinations) {
-            const routeSegment = this.findRoute(currentOrigin, currentDestination, flights, []);
-            if (routeSegment) {
-              totalRoute.push(routeSegment);
-              currentOrigin = currentDestination; // The current destination becomes the new origin for the next segment
-            } else {
-              console.log('Route segment not found from', currentOrigin, 'to', currentDestination);
-              break;
-            }
-          }
-  
-          if (totalRoute.length === allDestinations.length) {
-            console.log('Complete route found:', totalRoute);
+          const routeSegment = this.findRoute(origin, destination, flights, []);
+          if (routeSegment) {
+            const journey = {
+              Journey: {
+                Origin: origin,
+                Destination: destination,
+                Price: routeSegment.flights.reduce((sum, current) => sum + current.price, 0),
+                Flights: routeSegment.flights.map(flight => ({
+                  Origin: flight.departureStation,
+                  Destination: flight.arrivalStation,
+                  Price: flight.price,
+                  Transport: {
+                    FlightCarrier: flight.flightCarrier,
+                    FlightNumber: flight.flightNumber
+                  }
+                }))
+              }
+            };
+            console.log('Journey:', journey);
           } else {
-            console.log('Complete route not found');
+            console.log('Route not found from', origin, 'to', destination);
           }
         },
         error: (error: any) => {
@@ -89,22 +66,21 @@ export class FlightFormComponent implements OnInit {
       });
     }
   }
-  
-findRoute(current: string, destination: string, flights: Flight[], route: Flight[]): { origin: string, destination: string, flights: Flight[] } | null {
-  const departingFlights = flights.filter(flight => flight.departureStation === current);
 
-  for (const flight of departingFlights) {
-    if (flight.arrivalStation === destination) {
-      return { origin: current, destination: destination, flights: [...route, flight] };
-    } else if (!route.find(r => r.departureStation === flight.arrivalStation)) {
-      const newRoute = this.findRoute(flight.arrivalStation, destination, flights, [...route, flight]);
-      if (newRoute) {
-        return newRoute;
+  findRoute(origin: string, destination: string, flights: Flight[], route: Flight[]): { origin: string, destination: string, flights: Flight[] } | null {
+    const departingFlights = flights.filter(flight => flight.departureStation === origin);
+
+    for (const flight of departingFlights) {
+      if (flight.arrivalStation === destination) {
+        return { origin: origin, destination: destination, flights: [...route, flight] };
+      } else if (!route.find(r => r.departureStation === flight.arrivalStation)) {
+        const newRoute = this.findRoute(flight.arrivalStation, destination, flights, [...route, flight]);
+        if (newRoute) {
+          return newRoute;
+        }
       }
     }
+
+    return null;
   }
-
-  return null;
-}
-
 }

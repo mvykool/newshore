@@ -10,58 +10,40 @@
 
 
     <form [formGroup]="flightForm" (ngSubmit)="onSubmit()">
-
-        <div class="field-radio">
-            <div class="field-radio-container">
-                <label class="radio">
-                    <input type="radio" checked value="oneWay" formControlName="tripType" class="radio-btn"> One-way
-                    </label>
-
-                <label class="radio">
-                    <input type="radio" value="multiStop" formControlName="tripType" class="radio-btn"> Multiple destinations
-                    </label>
-            </div>
-
-            <small>
-                Book International and Domestic Flights
-            </small>
-        </div>
+        <!-- Rest of your code -->
 
         <div class="flight-container">
-            <div class="flight-box">
-                <label>From</label>
-                <input formControlName="origin" placeholder="MZL">
-            </div>
-
-            <div class="flight-box">
-                <label>To</label>
-                <input formControlName="destination" placeholder="BCN">
-            </div>
-        </div>
-
-        <div formArrayName="intermediaryDestinations" *ngIf="flightForm.get('tripType')?.value === 'multiStop'">
-            <div *ngFor="let intermediaryDestination of getIntermediaryDestinations.controls; let i = index" [formGroupName]="i">
-                <div class="flight-container">
-                    <div class="flight-box">
-                        <label>New Origin {{ i + 1 }}</label>
-                        <input formControlName="newOrigin" [value]="flightForm.get('destination')?.value" placeholder="BOG">
-                    </div>
-
-                    <div class="flight-box">
-                        <label>New Destination {{ i + 1 }}</label>
-                        <input formControlName="newDestination" placeholder="MAD">
-                    </div>
+            <div class="input-section">
+                <!-- Existing error handling -->
+                <div *ngIf="flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched">
+                    <span class="invalid-text">Please enter exactly 3 letters!</span>
                 </div>
+                <!-- New error for originDestinationSame -->
+                <div *ngIf="flightForm.hasError('originDestinationSame')">
+                    <span class="invalid-text">Origin and destination can't be the same!</span>
+                </div>
+                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('origin')?.invalid && flightForm.get('origin')?.touched || flightForm.hasError('originDestinationSame')}">
+                    <label>From</label>
+                    <input formControlName="origin" placeholder="MZL" appUppercase>
+                </div>
+            </div>
 
-                <button class="remove-btn" (click)="removeIntermediaryDestination(i)">Remove this stop</button>
+            <div class="input-section">
+                <!-- Existing error handling -->
+                <div *ngIf="flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched">
+                    <span class="invalid-text">Please enter exactly 3 letters!</span>
+                </div>
+                <!-- New error for originDestinationSame -->
+                <div *ngIf="flightForm.hasError('originDestinationSame')">
+                    <span class="invalid-text">Origin and destination can't be the same!</span>
+                </div>
+                <div class="flight-box" [ngClass]="{'invalid-input': flightForm.get('destination')?.invalid && flightForm.get('destination')?.touched || flightForm.hasError('originDestinationSame')}">
+                    <label>To</label>
+                    <input formControlName="destination" placeholder="BCN" appUppercase>
+                </div>
             </div>
         </div>
 
-
-        <button class="add-btn" *ngIf="flightForm.get('tripType')?.value === 'multiStop'" (click)="addIntermediaryDestination()">Add Origin and Destination</button>
-
-
-        <button type="submit" class="submit-btn">Search Flight</button>
-
+        <button type="submit" class="submit-btn" [disabled]="!flightForm.valid">Search Flight</button>
     </form>
 </section>
