@@ -11,7 +11,6 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
       declarations: [AppComponent, NavbarComponent, FooterComponent],
-      // Other configuration and imports
     });
   });
 

@@ -6,8 +6,8 @@ import { ResultsComponent } from './results.component';
   describe('ResultsComponent', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, /* Other necessary imports */],
-        // Other configuration and declarations
+        imports: [HttpClientModule,],
+    
       });
     });
   
