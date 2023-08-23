@@ -1,6 +1,6 @@
-# newshore-test - Prueba Frontend en Angular
+# Flights Booking web-app
 
-Este es un proyecto de prueba frontend desarrollado en Angular. Proporciona una estructura base para comenzar a construir una aplicación web utilizando el framework Angular.
+
 
 ## Prerrequisitos
 
