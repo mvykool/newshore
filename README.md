@@ -1,5 +1,8 @@
 # Flights Booking web-app
 
+**` Built with`**
+
+[![My Skills](https://skillicons.dev/icons?i=html,css,ts,angular)](https://skillicons.dev)
 
 
 ## Prerrequisitos
